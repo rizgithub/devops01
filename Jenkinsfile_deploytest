@@ -1,0 +1,42 @@
+pipeline 
+{
+    agent any
+    
+    stages
+    {
+        stage("Create a new file" )
+        {
+            input {
+                message "Give me your name ?"
+                ok "Yes, we should."
+                submitter "rizwan"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins')
+                }
+            }
+            steps
+            {
+                sh "touch /home/jenkins/pipeline_test_file.txt"
+                sh "echo $PERSON >> /home/jenkins/pipeline_test_file.txt"
+            }
+           
+        }
+        stage("Add more data to file")
+        {
+            steps
+            {
+                sh "echo 'Hello editing' >> /home/jenkins/pipeline_test_file.txt"
+            }
+           
+        }
+        stage("create new file with first files data")
+        {
+            steps
+            {
+               sh "cat /home/jenkins/pipeline_test_file.txt > /home/jenkins/pipeline_test_newfile.txt"    
+        
+            }
+        }
+    }
+    
+}
